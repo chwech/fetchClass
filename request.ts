@@ -78,13 +78,15 @@ class Fetch {
     return fetch(sendUrl, init)
       .then(function(response) {
         if (config.responseType === 'json') {
-          return {
-            data: response.json(),
-            status: response.status,
-            headers: response.headers,
-            statusText: response.statusText,
-            config: config
-          }
+          return response.json().then(function (data) {
+            return {
+              data: data,
+              status: response.status,
+              headers: response.headers,
+              statusText: response.statusText,
+              config: config
+            }
+          })
         }
       })
   }
@@ -119,4 +121,6 @@ class Fetch {
 }
 
 let axios = new Fetch()
-axios.get('/test')
+axios.get('/test').then(res => {
+  console.log(res)
+})
