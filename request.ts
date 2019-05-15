@@ -119,4 +119,4 @@ class Fetch {
 }
 
 let axios = new Fetch()
-// axios.get('/test')
+axios.get('/test')
