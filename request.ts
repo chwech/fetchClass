@@ -47,6 +47,16 @@ function transformRequest (config: Config, data: data): data {
   }
   return temp
 }
+// 合并配置对象
+function mergeConfig(config: Config, instanceDefaults?: Config, FetchDefaults?: Config): Config {
+  let sendConfig: Config = {
+    ...defaultConfig,
+    ...FetchDefaults,
+    ...instanceDefaults,
+    ...config
+  }
+  return sendConfig
+}
 class Fetch {
   // 公有实例属性
   public defaults: Config = defaultConfig; // 实例的默认配置
@@ -58,23 +68,17 @@ class Fetch {
     this.defaults.baseUrl = opts.baseUrl
   }
   // protected修饰的属性或方法，可以在类与子类中访问
-  // 合并配置对象
-  protected mergeConfig(config: Config): Config {
-    let sendConfig: Config = {
-      ...Fetch.defaults,
-      ...defaultConfig,
-      ...this.defaults,
-      ...config
-    }
-    return sendConfig
-  }
+ 
   // 对外接口 start==========================================================================
-  public request (config: Config = defaultConfig) {
-    let sendUrl: string = this.defaults.baseUrl + config.url
+  // 静态方法
+  // 静态方法this表示的是类，而不是实例
+  public static request (config: Config = defaultConfig): Promise<ResponseObject> {
+    let sendUrl: string = config.baseUrl + config.url
     let init = {
       method: config.method,
       // body: config.data
     }
+    // 查询字符串处理
     let searchParams = new URLSearchParams()
     Object.keys(config.params).forEach(key => searchParams.append(key, config.params[key]))
     sendUrl += '?' + searchParams.toString()
@@ -93,37 +97,65 @@ class Fetch {
         }
       })
   }
-  public get (url: string, config: Config = defaultConfig) {
-    let sendConfig: Config = this.mergeConfig({ ...config, url })
+  public static get (url: string, config: Config = defaultConfig): Promise<ResponseObject> {
+    let sendConfig: Config = mergeConfig({ ...config, url }, undefined, this.defaults)
     return this.request(sendConfig)
   }
-  public delete (url: string, config: Config = defaultConfig) {
-    let sendConfig: Config = this.mergeConfig({ ...config, url, method: 'DELETE' })
+  public static delete (url: string, config: Config = defaultConfig): Promise<ResponseObject> {
+    let sendConfig: Config = mergeConfig({ ...config, url, method: 'DELETE' }, undefined, this.defaults)
     return this.request(sendConfig)
   }
-  public head (url: string, config: Config = defaultConfig) {
-    let sendConfig: Config = this.mergeConfig({ ...config, url, method: 'HEAD' })
+  public static head (url: string, config: Config = defaultConfig): Promise<ResponseObject> {
+    let sendConfig: Config = mergeConfig({ ...config, url, method: 'HEAD' }, undefined, this.defaults)
     return this.request(sendConfig)
   }
-  public put (url: string, data: data, config: Config = defaultConfig) {
+  public static put (url: string, data: data, config: Config = defaultConfig): Promise<ResponseObject> {
     data = transformRequest(config, data) // 转换数据
-    let sendConfig: Config = this.mergeConfig({ ...config, url, method: 'PUT', data })
+    let sendConfig: Config = mergeConfig({ ...config, url, method: 'PUT', data }, undefined, this.defaults)
     return this.request(sendConfig)
   }
-  public patch (url: string, data: data, config: Config = defaultConfig) {
+  public static patch (url: string, data: data, config: Config = defaultConfig): Promise<ResponseObject> {
     data = transformRequest(config, data) // 转换数据
-    let sendConfig: Config = this.mergeConfig({ ...config, url, method: 'PATCH', data })
+    let sendConfig: Config = mergeConfig({ ...config, url, method: 'PATCH', data }, undefined, this.defaults)
     return this.request(sendConfig)
   }
-  public post (url: string, data: data, config: Config = defaultConfig) {
+  public static post (url: string, data: data, config: Config = defaultConfig): Promise<ResponseObject> {
     data = transformRequest(config, data) // 转换数据
-    let sendConfig: Config = this.mergeConfig({ ...config, url, method: 'POST', data })
+    let sendConfig: Config = mergeConfig({ ...config, url, method: 'POST', data }, undefined, this.defaults)
     return this.request(sendConfig)
+  }
+  // 实例方法
+  public request (config: Config = defaultConfig): Promise<ResponseObject> {
+    return Fetch.request(config)
+  }
+  public get (url: string, config: Config = defaultConfig): Promise<ResponseObject> {
+    let sendConfig: Config = mergeConfig({ ...config, url }, this.defaults, Fetch.defaults)
+    return this.request(sendConfig)
+  }
+  public delete (url: string, config: Config = defaultConfig): Promise<ResponseObject> {
+    let sendConfig: Config = mergeConfig({ ...config, url, method: 'DELETE' }, this.defaults, Fetch.defaults)
+    return this.request(sendConfig)
+  }
+  public head (url: string, config: Config = defaultConfig): Promise<ResponseObject> {
+    let sendConfig: Config = mergeConfig({ ...config, url, method: 'HEAD' }, this.defaults, Fetch.defaults)
+    return this.request(sendConfig)    
+  }
+  public put (url: string, data: data, config: Config = defaultConfig): Promise<ResponseObject> {
+    let sendConfig: Config = mergeConfig({ ...config, url, data, method: 'PUT' }, this.defaults, Fetch.defaults)
+    return this.request(sendConfig)    
+  }
+  public patch (url: string, data: data, config: Config = defaultConfig): Promise<ResponseObject> {
+    let sendConfig: Config = mergeConfig({ ...config, url, data, method: 'PATCH' }, this.defaults, Fetch.defaults)
+    return this.request(sendConfig)    
+  }
+  public post (url: string, data: data, config: Config = defaultConfig): Promise<ResponseObject> {
+    let sendConfig: Config = mergeConfig({ ...config, url, data, method: 'POST' }, this.defaults, Fetch.defaults)
+    return this.request(sendConfig)    
   }
   // 对外接口 end ==========================================================================
 }
 
-let axios = new Fetch()
+let axios: Fetch = new Fetch()
 axios.get('/test', {
   params: {
     a: 1,
