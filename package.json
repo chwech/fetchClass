@@ -4,6 +4,7 @@
   "description": "",
   "main": "http.js",
   "scripts": {
+    "start": "supervisor http.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

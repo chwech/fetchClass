@@ -39,6 +39,7 @@ app.use(async (ctx, next) => {
 app.use(async ctx => {
   if (ctx.path === '/test') {
     ctx.type = 'json'
+    console.log(ctx.query)
     ctx.body = JSON.stringify({
       code: 200,
       data: { a: 1 },

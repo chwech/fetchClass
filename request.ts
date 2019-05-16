@@ -8,7 +8,7 @@ interface PlainObject {
 // 类型别名, 这样就可以很方便使用和复用啦， 联合类型比较常用
 type data = PlainObject | URLSearchParams | string | ArrayBuffer | ArrayBufferView | FormData | File | Blob;
 interface Config {
-  url: string;
+  url?: string;
   baseUrl?: string;
   method?: string; // 名字后加问号表示可选属性
   params?: PlainObject | URLSearchParams; // params是一个无格式对象(plain object)或 URLSearchParams 对象
@@ -75,6 +75,9 @@ class Fetch {
       method: config.method,
       // body: config.data
     }
+    let searchParams = new URLSearchParams()
+    Object.keys(config.params).forEach(key => searchParams.append(key, config.params[key]))
+    sendUrl += '?' + searchParams.toString()
     return fetch(sendUrl, init)
       .then(function(response) {
         if (config.responseType === 'json') {
@@ -121,6 +124,11 @@ class Fetch {
 }
 
 let axios = new Fetch()
-axios.get('/test').then(res => {
+axios.get('/test', {
+  params: {
+    a: 1,
+    b: 2
+  }
+}).then(res => {
   console.log(res)
 })
