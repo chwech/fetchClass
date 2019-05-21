@@ -154,7 +154,6 @@ class Fetch {
   }
   // 对外接口 end ==========================================================================
 }
-
 let axios: Fetch = new Fetch()
 axios.get('/test', {
   params: {
