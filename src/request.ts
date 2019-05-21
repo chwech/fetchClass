@@ -163,3 +163,4 @@ axios.get('/test', {
 }).then(res => {
   console.log(res)
 })
+export default Fetch
