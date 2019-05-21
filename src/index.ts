@@ -1,2 +1,4 @@
 
-import "./request.ts"
+import fetchClass from "./request"
+
+export default fetchClass

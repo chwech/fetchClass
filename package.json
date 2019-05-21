@@ -21,10 +21,17 @@
   "dependencies": {},
   "devDependencies": {
     "jest": "^24.8.0",
+    "jest-fetch-mock": "^2.1.2",
     "koa": "^2.7.0",
     "ts-loader": "^6.0.1",
     "typescript": "^3.4.5",
     "webpack": "^4.31.0",
     "webpack-cli": "^3.3.2"
+  },
+  "jest": {
+    "automock": false,
+    "setupFiles": [
+      "./test/setupJest.js"
+    ]
   }
 }

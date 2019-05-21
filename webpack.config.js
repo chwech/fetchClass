@@ -5,8 +5,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'static'),
     filename: "request.js",
-    library: "fetchClass",
-    libraryTarget: "umd"
+    library: 'fetchClass',
+    libraryTarget: 'umd'
   },
   resolve: {
     // Add '.ts' and '.tsx' as a resolvable extension.
