@@ -57,7 +57,8 @@ function mergeConfig(config: Config, instanceDefaults?: Config, FetchDefaults?: 
   }
   return sendConfig
 }
-class Fetch {
+
+export default class Fetch {
   // 公有实例属性
   public defaults: Config = defaultConfig; // 实例的默认配置
   // 静态属性
@@ -154,12 +155,3 @@ class Fetch {
   }
   // 对外接口 end ==========================================================================
 }
-let axios: Fetch = new Fetch()
-axios.get('/test', {
-  params: {
-    a: 1,
-    b: 2
-  }
-}).then(res => {
-  console.log(res)
-})

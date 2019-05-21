@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["fetchClass"] = factory();
+	else
+		root["fetchClass"] = factory();
+})(window, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -86,31 +96,24 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 
-exports.__esModule = true;
-__webpack_require__(1);
+/* harmony default export */ __webpack_exports__["default"] = (_request__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Fetch; });
 // 默认配置对象
-var defaultConfig = {
+let defaultConfig = {
     url: '',
     baseUrl: '',
     method: 'GET',
@@ -124,10 +127,9 @@ var defaultConfig = {
     ]
 };
 function transformRequest(config, data) {
-    var temp = data;
+    let temp = data;
     if (config.transformRequest) {
-        for (var _i = 0, _a = config.transformRequest; _i < _a.length; _i++) {
-            var fn = _a[_i];
+        for (let fn of config.transformRequest) {
             temp = fn(temp);
         }
     }
@@ -135,12 +137,11 @@ function transformRequest(config, data) {
 }
 // 合并配置对象
 function mergeConfig(config, instanceDefaults, FetchDefaults) {
-    var sendConfig = __assign({}, defaultConfig, FetchDefaults, instanceDefaults, config);
+    let sendConfig = Object.assign({}, defaultConfig, FetchDefaults, instanceDefaults, config);
     return sendConfig;
 }
-var Fetch = /** @class */ (function () {
-    function Fetch(opts) {
-        if (opts === void 0) { opts = defaultConfig; }
+class Fetch {
+    constructor(opts = defaultConfig) {
         // 公有实例属性
         this.defaults = defaultConfig; // 实例的默认配置
         // 实例属性赋值
@@ -150,15 +151,14 @@ var Fetch = /** @class */ (function () {
     // 对外接口 start==========================================================================
     // 静态方法
     // 静态方法this表示的是类，而不是实例
-    Fetch.request = function (config) {
-        if (config === void 0) { config = defaultConfig; }
-        var sendUrl = config.baseUrl + config.url;
-        var init = {
+    static request(config = defaultConfig) {
+        let sendUrl = config.baseUrl + config.url;
+        let init = {
             method: config.method,
         };
         // 查询字符串处理
-        var searchParams = new URLSearchParams();
-        Object.keys(config.params).forEach(function (key) { return searchParams.append(key, config.params[key]); });
+        let searchParams = new URLSearchParams();
+        Object.keys(config.params).forEach(key => searchParams.append(key, config.params[key]));
         sendUrl += '?' + searchParams.toString();
         return fetch(sendUrl, init)
             .then(function (response) {
@@ -174,89 +174,67 @@ var Fetch = /** @class */ (function () {
                 });
             }
         });
-    };
-    Fetch.get = function (url, config) {
-        if (config === void 0) { config = defaultConfig; }
-        var sendConfig = mergeConfig(__assign({}, config, { url: url }), undefined, this.defaults);
-        return this.request(sendConfig);
-    };
-    Fetch["delete"] = function (url, config) {
-        if (config === void 0) { config = defaultConfig; }
-        var sendConfig = mergeConfig(__assign({}, config, { url: url, method: 'DELETE' }), undefined, this.defaults);
-        return this.request(sendConfig);
-    };
-    Fetch.head = function (url, config) {
-        if (config === void 0) { config = defaultConfig; }
-        var sendConfig = mergeConfig(__assign({}, config, { url: url, method: 'HEAD' }), undefined, this.defaults);
-        return this.request(sendConfig);
-    };
-    Fetch.put = function (url, data, config) {
-        if (config === void 0) { config = defaultConfig; }
-        data = transformRequest(config, data); // 转换数据
-        var sendConfig = mergeConfig(__assign({}, config, { url: url, method: 'PUT', data: data }), undefined, this.defaults);
-        return this.request(sendConfig);
-    };
-    Fetch.patch = function (url, data, config) {
-        if (config === void 0) { config = defaultConfig; }
-        data = transformRequest(config, data); // 转换数据
-        var sendConfig = mergeConfig(__assign({}, config, { url: url, method: 'PATCH', data: data }), undefined, this.defaults);
-        return this.request(sendConfig);
-    };
-    Fetch.post = function (url, data, config) {
-        if (config === void 0) { config = defaultConfig; }
-        data = transformRequest(config, data); // 转换数据
-        var sendConfig = mergeConfig(__assign({}, config, { url: url, method: 'POST', data: data }), undefined, this.defaults);
-        return this.request(sendConfig);
-    };
-    // 实例方法
-    Fetch.prototype.request = function (config) {
-        if (config === void 0) { config = defaultConfig; }
-        return Fetch.request(config);
-    };
-    Fetch.prototype.get = function (url, config) {
-        if (config === void 0) { config = defaultConfig; }
-        var sendConfig = mergeConfig(__assign({}, config, { url: url }), this.defaults, Fetch.defaults);
-        return this.request(sendConfig);
-    };
-    Fetch.prototype["delete"] = function (url, config) {
-        if (config === void 0) { config = defaultConfig; }
-        var sendConfig = mergeConfig(__assign({}, config, { url: url, method: 'DELETE' }), this.defaults, Fetch.defaults);
-        return this.request(sendConfig);
-    };
-    Fetch.prototype.head = function (url, config) {
-        if (config === void 0) { config = defaultConfig; }
-        var sendConfig = mergeConfig(__assign({}, config, { url: url, method: 'HEAD' }), this.defaults, Fetch.defaults);
-        return this.request(sendConfig);
-    };
-    Fetch.prototype.put = function (url, data, config) {
-        if (config === void 0) { config = defaultConfig; }
-        var sendConfig = mergeConfig(__assign({}, config, { url: url, data: data, method: 'PUT' }), this.defaults, Fetch.defaults);
-        return this.request(sendConfig);
-    };
-    Fetch.prototype.patch = function (url, data, config) {
-        if (config === void 0) { config = defaultConfig; }
-        var sendConfig = mergeConfig(__assign({}, config, { url: url, data: data, method: 'PATCH' }), this.defaults, Fetch.defaults);
-        return this.request(sendConfig);
-    };
-    Fetch.prototype.post = function (url, data, config) {
-        if (config === void 0) { config = defaultConfig; }
-        var sendConfig = mergeConfig(__assign({}, config, { url: url, data: data, method: 'POST' }), this.defaults, Fetch.defaults);
-        return this.request(sendConfig);
-    };
-    // 静态属性
-    Fetch.defaults = defaultConfig; // 全局的默认配置
-    return Fetch;
-}());
-var axios = new Fetch();
-axios.get('/test', {
-    params: {
-        a: 1,
-        b: 2
     }
-}).then(function (res) {
-    console.log(res);
-});
+    static get(url, config = defaultConfig) {
+        let sendConfig = mergeConfig(Object.assign({}, config, { url }), undefined, this.defaults);
+        return this.request(sendConfig);
+    }
+    static delete(url, config = defaultConfig) {
+        let sendConfig = mergeConfig(Object.assign({}, config, { url, method: 'DELETE' }), undefined, this.defaults);
+        return this.request(sendConfig);
+    }
+    static head(url, config = defaultConfig) {
+        let sendConfig = mergeConfig(Object.assign({}, config, { url, method: 'HEAD' }), undefined, this.defaults);
+        return this.request(sendConfig);
+    }
+    static put(url, data, config = defaultConfig) {
+        data = transformRequest(config, data); // 转换数据
+        let sendConfig = mergeConfig(Object.assign({}, config, { url, method: 'PUT', data }), undefined, this.defaults);
+        return this.request(sendConfig);
+    }
+    static patch(url, data, config = defaultConfig) {
+        data = transformRequest(config, data); // 转换数据
+        let sendConfig = mergeConfig(Object.assign({}, config, { url, method: 'PATCH', data }), undefined, this.defaults);
+        return this.request(sendConfig);
+    }
+    static post(url, data, config = defaultConfig) {
+        data = transformRequest(config, data); // 转换数据
+        let sendConfig = mergeConfig(Object.assign({}, config, { url, method: 'POST', data }), undefined, this.defaults);
+        return this.request(sendConfig);
+    }
+    // 实例方法
+    request(config = defaultConfig) {
+        return Fetch.request(config);
+    }
+    get(url, config = defaultConfig) {
+        let sendConfig = mergeConfig(Object.assign({}, config, { url }), this.defaults, Fetch.defaults);
+        return this.request(sendConfig);
+    }
+    delete(url, config = defaultConfig) {
+        let sendConfig = mergeConfig(Object.assign({}, config, { url, method: 'DELETE' }), this.defaults, Fetch.defaults);
+        return this.request(sendConfig);
+    }
+    head(url, config = defaultConfig) {
+        let sendConfig = mergeConfig(Object.assign({}, config, { url, method: 'HEAD' }), this.defaults, Fetch.defaults);
+        return this.request(sendConfig);
+    }
+    put(url, data, config = defaultConfig) {
+        let sendConfig = mergeConfig(Object.assign({}, config, { url, data, method: 'PUT' }), this.defaults, Fetch.defaults);
+        return this.request(sendConfig);
+    }
+    patch(url, data, config = defaultConfig) {
+        let sendConfig = mergeConfig(Object.assign({}, config, { url, data, method: 'PATCH' }), this.defaults, Fetch.defaults);
+        return this.request(sendConfig);
+    }
+    post(url, data, config = defaultConfig) {
+        let sendConfig = mergeConfig(Object.assign({}, config, { url, data, method: 'POST' }), this.defaults, Fetch.defaults);
+        return this.request(sendConfig);
+    }
+}
+// 静态属性
+Fetch.defaults = defaultConfig; // 全局的默认配置
 
 
 /***/ })
 /******/ ]);
+});
