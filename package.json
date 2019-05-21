@@ -5,7 +5,7 @@
   "main": "http.js",
   "scripts": {
     "start": "supervisor http.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "webpack"
   },
   "repository": {
@@ -20,10 +20,11 @@
   "homepage": "https://github.com/chwech/fetchClass#readme",
   "dependencies": {},
   "devDependencies": {
+    "jest": "^24.8.0",
+    "koa": "^2.7.0",
     "ts-loader": "^6.0.1",
-    "webpack": "^4.31.0",
-    "webpack-cli": "^3.3.2",
     "typescript": "^3.4.5",
-    "koa": "^2.7.0"
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2"
   }
 }
