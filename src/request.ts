@@ -7,6 +7,14 @@ interface PlainObject {
 }
 // 类型别名, 这样就可以很方便使用和复用啦， 联合类型比较常用
 type data = PlainObject | URLSearchParams | string | ArrayBuffer | ArrayBufferView | FormData | File | Blob;
+enum responseType {
+  json,
+  arraybuffer,
+  blob,
+  document,
+  text,
+  stream
+}
 interface Config {
   url?: string;
   baseUrl?: string;
@@ -85,7 +93,7 @@ export default class Fetch {
     sendUrl += '?' + searchParams.toString()
     return fetch(sendUrl, init)
       .then(function(response) {
-        if (config.responseType === 'json') {
+        if (responseType[config.responseType] === responseType.json) {
           return response.json().then(function (data) {
             return {
               data: data,
