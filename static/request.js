@@ -169,6 +169,7 @@ class Fetch {
         let searchParams = new URLSearchParams();
         Object.keys(config.params).forEach(key => searchParams.append(key, config.params[key]));
         sendUrl += '?' + searchParams.toString();
+        console.log(sendUrl, init)
         return fetch(sendUrl, init)
             .then(function (response) {
             if (responseType[config.responseType] === responseType.json) {
