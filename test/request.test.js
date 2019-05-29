@@ -27,3 +27,45 @@ describe('测试get请求', () => {
     })
   })
 })
+
+describe('测试post请求', () => {
+  beforeEach(() => {
+    fetch.resetMocks()
+  })
+  test('请求并返回正确的data', () => {
+    fetch.mockResponseOnce(JSON.stringify({a: 1, b: 2}))
+
+    const axios = new fetchClass()
+    return axios.post('/test').then(response => {
+      expect(response.data).toEqual({a: 1, b: 2})
+    })
+  })
+})
+
+describe('测试put请求', () => {
+  beforeEach(() => {
+    fetch.resetMocks()
+  })
+  test('请求并返回正确的data', () => {
+    fetch.mockResponseOnce(JSON.stringify({a: 1, b: 2}))
+
+    const axios = new fetchClass()
+    return axios.put('/test').then(response => {
+      expect(response.data).toEqual({a: 1, b: 2})
+    })
+  })
+})
+
+describe('测试delete请求', () => {
+  beforeEach(() => {
+    fetch.resetMocks()
+  })
+  test('请求并返回正确的data', () => {
+    fetch.mockResponseOnce(JSON.stringify({a: 1, b: 2}))
+
+    const axios = new fetchClass()
+    return axios.delete('/test').then(response => {
+      expect(response.data).toEqual({a: 1, b: 2})
+    })
+  })
+})
