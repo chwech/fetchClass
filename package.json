@@ -34,7 +34,8 @@
     "setupFiles": [
       "./test/setupJest.js"
     ],
-    "collectCoverage": true
+    "collectCoverage": true,
+    "coverageDirectory": "./coverage/"
   },
   "config": {
     "commitizen": {
