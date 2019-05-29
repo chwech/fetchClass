@@ -33,7 +33,8 @@
     "automock": false,
     "setupFiles": [
       "./test/setupJest.js"
-    ]
+    ],
+    "collectCoverage": true
   },
   "config": {
     "commitizen": {
