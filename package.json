@@ -2,7 +2,7 @@
   "name": "guide-web",
   "version": "1.0.0",
   "description": "",
-  "main": "http.js",
+  "main": "static/request.js",
   "scripts": {
     "start": "supervisor http.js",
     "test": "jest",

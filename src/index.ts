@@ -1,4 +1,1 @@
-
-import fetchClass from "./request"
-
-export default fetchClass
+export { Fetch as fetchClass } from './request'

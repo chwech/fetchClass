@@ -101,8 +101,9 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fetchClass", function() { return _request__WEBPACK_IMPORTED_MODULE_0__["Fetch"]; });
 
-/* harmony default export */ __webpack_exports__["default"] = (_request__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
 
 
 /***/ }),
@@ -111,7 +112,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Fetch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Fetch", function() { return Fetch; });
 var responseType;
 (function (responseType) {
     responseType[responseType["json"] = 0] = "json";

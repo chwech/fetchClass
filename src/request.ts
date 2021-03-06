@@ -66,7 +66,7 @@ function mergeConfig(config: Config, instanceDefaults?: Config, FetchDefaults?: 
   return sendConfig
 }
 
-export default class Fetch {
+export class Fetch {
   // 公有实例属性
   public defaults: Config = defaultConfig; // 实例的默认配置
   // 静态属性
